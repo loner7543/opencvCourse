@@ -1,3 +1,4 @@
+# coding=utf-8
 import numpy as np
 import cv2
 acc=1#storage space
@@ -10,7 +11,7 @@ image = cv2.imread("image/ball.jpg")
 output = image.copy()
 gray = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
 cv2.imwrite("image/grayBall.jpg", gray)
-edged = cv2.Canny(gray, first_threshold, second_threshold)# find borders use canny-algoritm
+edged = cv2.Canny(gray, first_threshold, second_threshold)# find borders use canny-algoritm на вход подаются 2 пороговых значения
 cv2.imwrite("image/borders.jpg",edged)
 circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT,acc,2,100)# save resolution, 100 - Minimum distance between the centers of the detected circles Hough transform1-same resolution
 if circles is not None:
