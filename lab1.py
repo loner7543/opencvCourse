@@ -9,6 +9,9 @@ center_color=(0, 128, 255)
 
 image = cv2.imread("image/ball.jpg")
 output = image.copy()
+im_color = cv2.cvtColor(image,cv2.COLOR_RGB2HSV)
+# cv2.inRange()
+cv2.imshow("output", np.hstack([image, im_color]))
 gray = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
 cv2.imwrite("image/grayBall.jpg", gray)
 edged = cv2.Canny(gray, first_threshold, second_threshold)# find borders use canny-algoritm на вход подаются 2 пороговых значения
@@ -22,5 +25,5 @@ if circles is not None:
   cv2.circle(output, (x, y), r, (0, 255, 0), border_size)
   cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5), center_color, -1)
 
- cv2.imshow("output", np.hstack([image, output]))
+ #cv2.imshow("output", np.hstack([image, output]))
  cv2.waitKey(0)

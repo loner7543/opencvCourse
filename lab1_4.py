@@ -1,4 +1,5 @@
 # coding=utf-8
+# выделение цвета
 import cv2
 import numpy as np
 
@@ -7,11 +8,6 @@ first_threshold = 10
 second_threshold=250
 border_size=2
 center_color=(0, 128, 255)
-
-any_camera=-1
-default_camera=-1
-sleep=60# задержка кадра каждую минуту
-fps=16
 
 def findCenter(image):# по кадрам находит шар в видеопотоке
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -31,14 +27,12 @@ def findCenter(image):# по кадрам находит шар в видеоп�
             cv2.rectangle(image, (x - 5, y - 5), (x + 5, y + 5), center_color, -1)
     else:print ("Не найдено")
 
-
 print (cv2.__version__)
-cap = cv2.VideoCapture(default_camera)
+cap = cv2.VideoCapture(0)
 
 while(True):
     ret,frame = cap.read()# Кадр за кадром
     findCenter(frame)
-    #cv2.imwrite("image/frame.jpg", frame)
     cv2.imshow('frame', frame)# окно с кадрами
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
