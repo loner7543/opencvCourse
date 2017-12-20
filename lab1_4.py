@@ -1,5 +1,6 @@
 # coding=utf-8
 # выделение цвета
+#в красное+ от него контур контур отдавать хафу
 import cv2
 import numpy as np
 
@@ -10,13 +11,12 @@ border_size=2
 center_color=(0, 128, 255)
 
 def findCenter(image):# по кадрам находит шар в видеопотоке
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite("image/grayBall.jpg", gray)
-    edged = cv2.Canny(gray, first_threshold,
-                      second_threshold)  # find borders use canny-algoritm на вход подаются 2 пороговых значения
+    hsv_image = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+    cv2.imwrite("image/hsv.jpg", hsv_image)
+
+    edged = cv2.Canny(hsv_image, first_threshold,second_threshold)  # find borders use canny-algoritm на вход подаются 2 пороговых значения
     cv2.imwrite("image/borders.jpg", edged)
-    #в красное+ от него контур контур отдавать хафу
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, acc, 2,100)  # save resolution, 100 - Minimum distance between the centers of the detected circles Hough transform1-same resolution
+    circles = cv2.HoughCircles(edged, cv2.HOUGH_GRADIENT, acc, 2,100)  # save resolution, 100 - Minimum distance between the centers of the detected circles Hough transform1-same resolution
     if circles is not None:# Если нашли окружности по Хафу
         print ("------------Найдена окружность---------")
         circles = np.round(circles[0, :]).astype("int")  # double to int
